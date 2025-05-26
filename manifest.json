@@ -1,6 +1,6 @@
 {
-  "id": "obsidian-kindle-plugin",
-  "name": "Kindle Highlights",
+  "id": "obsidian-kindle-plugin-chonmage",
+  "name": "Kindle Highlights Chonmage",
   "version": "1.9.2",
   "description": "Sync your Kindle book highlights using your Amazon login or uploading your My Clippings file",
   "minAppVersion": "0.10.2",
