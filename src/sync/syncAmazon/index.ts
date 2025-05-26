@@ -5,7 +5,12 @@ import { scrapeBooks, scrapeHighlightsForBook } from '~/scraper';
 import type { SyncManager } from '~/sync';
 
 export default class SyncAmazon {
-  constructor(private syncManager: SyncManager) {}
+  constructor(private syncManager: SyncManager) {
+    // Listen for the startSyncingSelectedBooks event
+    ee.on('startSyncingSelectedBooks', () => {
+      void this.syncSelectedBooks();
+    });
+  }
 
   public async startSync(): Promise<void> {
     ee.emit('syncSessionStart', 'amazon');
@@ -22,7 +27,32 @@ export default class SyncAmazon {
       const remoteBooks = await scrapeBooks();
       const booksToSync = this.syncManager.filterBooksToSync(remoteBooks);
 
+      // Show book selection view with recommended books pre-selected
       ee.emit('fetchingBooksSuccess', booksToSync, remoteBooks);
+
+      // The actual syncing will be triggered by the confirmBookSelection event
+      // which is handled in syncSelectedBooks
+    } catch (error) {
+      console.error('Error while trying fetch books', error);
+      ee.emit('syncSessionFailure', String(error));
+    }
+  }
+
+  public async syncSelectedBooks(): Promise<void> {
+    try {
+      // Get the selected books from the store
+      const { get } = await import('svelte/store');
+      const { store } = await import('~/components/syncModal/store');
+      const state = get(store);
+
+      if (!state.allBooks || !state.selectedBookIds || state.selectedBookIds.length === 0) {
+        console.error('No books selected to sync');
+        return;
+      }
+
+      const booksToSync = state.allBooks.filter(book =>
+        state.selectedBookIds.includes(book.id)
+      );
 
       if (booksToSync.length > 0) {
         await this.syncBooks(booksToSync);
@@ -30,7 +60,7 @@ export default class SyncAmazon {
 
       ee.emit('syncSessionSuccess');
     } catch (error) {
-      console.error('Error while trying fetch books and to sync', error);
+      console.error('Error while trying to sync selected books', error);
       ee.emit('syncSessionFailure', String(error));
     }
   }

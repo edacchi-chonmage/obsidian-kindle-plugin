@@ -12,6 +12,8 @@ interface MessageEvents {
   logoutFailure: () => void;
   fetchingBooks: () => void;
   fetchingBooksSuccess: (booksToSync: Book[], remoteBooks: Book[]) => void;
+  confirmBookSelection: (selectedBookIds: string[]) => void;
+  startSyncingSelectedBooks: () => void;
   syncSessionStart: (mode: SyncMode) => void;
   syncSessionSuccess: () => void;
   syncSessionFailure: (message: string) => void;

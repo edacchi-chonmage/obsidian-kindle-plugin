@@ -12,6 +12,7 @@ const SyncModalTitle: Record<SyncModalState['status'], string> = {
   idle: 'Your Kindle highlights',
   'sync:fetching-books': 'Syncing data...',
   'sync:login': 'Syncing data...',
+  'sync:select-books': 'Select books to synchronize',
   'sync:syncing': 'Syncing data...',
   'choose-sync-method': 'Choose a sync method...',
 };

@@ -4,6 +4,7 @@
   import FirstTimeView from './views/FirstTimeView.svelte';
   import SyncButtons from './views/SyncButtons.svelte';
   import UpgradeView from './views/UpgradeView.svelte';
+  import BookSelectionView from './views/BookSelectionView.svelte';
   import { store } from './store';
   import type { SyncMode } from '~/models';
 
@@ -18,6 +19,8 @@
       store.update((p) => ({ ...p, status: 'choose-sync-method' }));
     }}
   />
+{:else if $store.status === 'sync:select-books'}
+  <BookSelectionView />
 {:else if $store.status.startsWith('sync:')}
   <SyncingView {onDone} />
 {:else if $store.status === 'choose-sync-method'}
