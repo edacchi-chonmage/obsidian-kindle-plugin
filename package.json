@@ -1,6 +1,6 @@
 {
   "name": "obsidian-kindle-plugin",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "description": "Sync your Kindle book highlights using your Amazon login or uploading your My Clippings file",
   "main": "src/index.ts",
   "repository": {
@@ -9,9 +9,9 @@
   },
   "keywords": [],
   "author": {
-    "name": "Hady Osman",
-    "email": "hadyos@gmail.com",
-    "url": "https://hady.geek.nz"
+    "name": "edacchi-chonmage",
+    "email": "thrbrd1989@gmail.com",
+    "url": "https://github.com/edacchi-chonmage/"
   },
   "license": "MIT",
   "scripts": {
